@@ -112,7 +112,7 @@ capture 13-service-ps.txt docker service ps git-stack_git-config
 {
   printf 'container_id=%s\n' "$service_container_id"
   docker exec "$service_container_id" sh -lc \
-    'printf "git_user="; git config --global user.name; test -s /run/secrets/git_token && echo secret_montado=sim; env | grep -q git_token && echo token_no_ambiente=sim || echo token_no_ambiente=não; stat -c "gitconfig_permissoes=%a" /root/.gitconfig'
+    'printf "git_user="; git config --global user.name; test -s /run/secrets/git_token && echo secret_montado=sim; env | grep -q git_token && echo token_no_ambiente=sim || echo token_no_ambiente=não; stat -c "gitconfig_permissoes=%a" "$HOME/.gitconfig"'
 } | tee "$EVIDENCE_DIR/14-secret-no-container.txt"
 
 docker exec "$service_container_id" sh -lc \
