@@ -3,14 +3,17 @@ version: "3.8"
 services:
   git-config:
     image: ubuntu:24.04
+    environment:
+      HOME: /tmp/git-home
     secrets:
       - git_token
     command: >-
-      bash -lc "apt-get update &&
+      bash -lc "mkdir -p \"$$HOME\" &&
+      apt-get update &&
       DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git ca-certificates &&
       git config --global user.name 'My Git User' &&
       git config --global user.token \"$$(cat /run/secrets/git_token)\" &&
-      chmod 600 /root/.gitconfig &&
+      chmod 600 \"$$HOME/.gitconfig\" &&
       sleep infinity"
     deploy:
       replicas: 1
