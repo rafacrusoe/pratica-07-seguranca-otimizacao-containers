@@ -1,0 +1,35 @@
+name: Validar Prática 07 Segurança e Otimização
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Exibir versões do ambiente
+        run: |
+          docker --version
+          docker compose version
+          git --version
+
+      - name: Executar as ações da prática
+        run: bash scripts/run-all.sh
+
+      - name: Publicar as evidências
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidencias-pratica-07
+          path: evidencias/
+          if-no-files-found: error
+          retention-days: 30
