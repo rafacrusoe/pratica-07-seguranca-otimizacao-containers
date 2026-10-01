@@ -1,0 +1,8 @@
+token.txt
+evidencias/*
+!evidencias/.gitkeep
+report/assets/*
+!report/assets/.gitkeep
+*.docx
+*.pdf
+__pycache__/

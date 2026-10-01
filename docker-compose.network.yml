@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  app:
+    image: imagem-teste-seguro:pratica07
+    container_name: pratica07-secure-app
+    command: ["sleep", "infinity"]
+    networks:
+      secure_internal_network:
+        aliases:
+          - secure-app
+
+  authorized-client:
+    image: alpine:3.20
+    container_name: pratica07-authorized-client
+    command: ["sleep", "infinity"]
+    networks:
+      - secure_internal_network
+
+networks:
+  secure_internal_network:
+    external: true
